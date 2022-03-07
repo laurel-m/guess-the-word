@@ -3,7 +3,7 @@ const button = document.querySelector(".guess");
 const letterInput = document.querySelector("input.letter");
 const remainingGuesses = document.querySelector(".remaining");
 const remainingSpan = document.querySelector("span");
-const messages = document.querySelector(".message");
+const message = document.querySelector(".message");
 const wordInProgress = document.querySelector(".word-in-progress");
 const playAgainButton = document.querySelector(".play-again");
 
@@ -25,6 +25,21 @@ placeholder(word);
 button.addEventListener("click", function(e) {
     e.preventDefault();
     const wordGuess = letterInput.value;
-    console.log(wordGuess);
     letterInput.value= "";
+    message.innerText = "";
+    playerInput(wordGuess);
 });
+
+// function for player's input //
+const playerInput = function (input) {
+    const acceptedLetter = /[a-zA-Z]/;
+    if (input.length === 0) {
+        message.innerText = "Please enter a letter.";
+    } else if (input.length > 1) {
+        message.innerText = "Please enter 1 letter at a time.";
+    } else if (!input.match(acceptedLetter)) {
+        message.innerText = "Please only enter letters A through Z.";
+    } else {
+        return input;
+        }
+    };
