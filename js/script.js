@@ -1,14 +1,16 @@
 const guessed = document.querySelector(".guessed-letters");
 const button = document.querySelector(".guess");
 const letterInput = document.querySelector("input.letter");
-const remainingGuesses = document.querySelector(".remaining");
+const remaining = document.querySelector(".remaining");
 const remainingSpan = document.querySelector("span");
 const message = document.querySelector(".message");
 const wordInProgress = document.querySelector(".word-in-progress");
 const playAgainButton = document.querySelector(".play-again");
 
-const word = "magnolia";
+let word = "magnolia";
 const guessedLetters = [];
+let remainingGuesses = 8;
+
 
 // adding letter placeholders //
 const placeholder = function (word) {
@@ -57,6 +59,7 @@ const makeGuess = function (guess) {
     } else {
         guessedLetters.push(guess);
         console.log(guessedLetters);
+        countGuesses(guess);
         updatedLetters();
         updateWord(guessedLetters);
     }
@@ -88,6 +91,25 @@ const updateWord = function (guessedLetters) {
     validateWin();
 };
 
+// function to count remaining guesses //
+const countGuesses = function (guess) {
+    const upperWord = word.toUpperCase();
+        if (!upperWord.includes(guess)) {
+            message.innerText = `Sorry, the word has no ${guess}.`;
+            remainingGuesses -= 1;
+        } else {
+            message.innerText = `Correct guess! The word has the letter ${guess}.`;
+        }
+
+        if (remainingGuesses === 0) {
+            message.innerHTML = `Game over. The correct word was <span class="hightlight">${word}</span>.`;
+        } else if (remainingGuesses === 1) {
+            remainingSpan.innerText = `${remainingGuesses} guess`;
+        } else {
+            remainingSpan.innerText = `${remainingGuesses} guesses`;
+        }
+    };
+
 // function if player won //
 const validateWin = function () {
     if (wordInProgress.innerText === word.toUpperCase()) {
@@ -95,3 +117,4 @@ const validateWin = function () {
         message.innerHTML = `<p class = "highlight">You guessed the correct word! Congrats!</p>`;
     }
 };
+
