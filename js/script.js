@@ -49,7 +49,7 @@ const playerInput = function (input) {
         }
     };
 
-    // function to capture input //
+// function to capture input //
 const makeGuess = function (guess) {
     guess = guess.toUpperCase();
     if (guessedLetters.includes(guess)) {
@@ -57,5 +57,41 @@ const makeGuess = function (guess) {
     } else {
         guessedLetters.push(guess);
         console.log(guessedLetters);
+        updatedLetters();
+        updateWord(guessedLetters);
+    }
+};
+
+// function to show the guessed letters //
+const updatedLetters = function () {
+    guessed.innerHTML = "";
+    for (const letter of guessedLetters) {
+    const li = document.createElement("li");
+    li.innerText = letter;
+    guessed.append(li);
+    }
+};
+
+// function to update word in progress //
+const updateWord = function (guessedLetters) {
+    const wordUpper = word.toUpperCase();
+    const wordArray = wordUpper.split("");
+    const revealWord = [];
+    for (const letter of wordArray) {
+    if (guessedLetters.includes(letter)) {
+        revealWord.push(letter.toUpperCase());
+    } else {
+        revealWord.push("●")
+        }
+    }
+    wordInProgress.innerText = revealWord.join("");
+    validateWin();
+};
+
+// function if player won //
+const validateWin = function () {
+    if (wordInProgress.innerText === word.toUpperCase()) {
+        message.classList.add("win");
+        message.innerHTML = `<p class = "highlight">You guessed the correct word! Congrats!</p>`;
     }
 };
