@@ -27,7 +27,6 @@ getWord();
 const placeholder = function (word) {
     const placeholderLetters = [];
     for (const letter of word) {
-        console.log(letter);
         placeholderLetters.push("●");
     }
     wordInProgress.innerText = placeholderLetters.join("");
@@ -111,7 +110,7 @@ const countGuesses = function (guess) {
         }
 
         if (remainingGuesses === 0) {
-            message.innerHTML = `Game over. The correct word was <span class="hightlight">${word}</span>.`;
+            message.innerHTML = `Game over! The correct word was <span class="hightlight">${word}</span>.`;
             startOver();
         } else if (remainingGuesses === 1) {
             remainingSpan.innerText = `${remainingGuesses} guess`;
